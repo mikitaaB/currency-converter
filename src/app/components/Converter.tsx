@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import ErrorBoundary from "../error";
 import { createWebSocketConnection } from "../api/socketClient";
 import { PairSelect } from "./PairSelect";
 import { AmountInput } from "./AmountInput";
@@ -43,16 +42,14 @@ export const Converter = ({ currencyPairs }: ConverterProps) => {
 	}, [amount, exchangeRate]);
 
 	return (
-		<ErrorBoundary>
-			<div className="p-4 bg-white rounded-lg shadow-md">
-				<PairSelect
-					currencyPairs={currencyPairs}
-					selectedPair={pair}
-					onChange={setPair}
-				/>
-				<AmountInput amount={amount} onChange={setAmount} />
-				<div className="font-bold text-gray-700">Result: {result}</div>
-			</div>
-		</ErrorBoundary>
+		<div className="p-4 bg-white rounded-lg shadow-md">
+			<PairSelect
+				currencyPairs={currencyPairs}
+				selectedPair={pair}
+				onChange={setPair}
+			/>
+			<AmountInput amount={amount} onChange={setAmount} />
+			<div className="font-bold text-gray-700">Result: {result}</div>
+		</div>
 	);
 };
