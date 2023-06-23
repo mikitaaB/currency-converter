@@ -1,18 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { createWebSocketConnection } from "../api/socketClient";
 import { PairSelect } from "./PairSelect";
 import { AmountInput } from "./AmountInput";
-
-type ExchangeRate = {
-	symbol: string;
-	price: number;
-};
-
-type ExchangeRates = {
-	[currency: string]: ExchangeRate;
-};
 
 type ConverterProps = {
 	currencyPairs: string[];
@@ -21,21 +12,16 @@ type ConverterProps = {
 export const Converter = ({ currencyPairs }: ConverterProps) => {
 	const [amount, setAmount] = useState<number>(1);
 	const [pair, setPair] = useState<string>(currencyPairs?.[0] ?? "BTCUSD");
-	const [exchangeRates, setExchangeRates] = useState<ExchangeRates>({});
+	const [exchangeRate, setExchangeRate] = useState<number>(0);
 	const [result, setResult] = useState<number>(0);
 
 	useEffect(() => {
-		const socket = createWebSocketConnection(pair, setExchangeRates);
+		const socket = createWebSocketConnection(pair, setExchangeRate);
 
 		return () => {
 			socket.close();
 		};
 	}, [pair]);
-
-	const exchangeRate = useMemo(
-		() => exchangeRates[pair]?.price ?? 0,
-		[pair, exchangeRates]
-	);
 
 	useEffect(() => {
 		setResult(+(amount * exchangeRate).toFixed(2));

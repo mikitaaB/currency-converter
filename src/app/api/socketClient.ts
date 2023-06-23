@@ -1,15 +1,10 @@
-type ExchangeRates = {
-	[currency: string]: {
-		symbol: string;
-		price: number;
-	};
-};
+import { apiLink } from "../constants";
 
 export const createWebSocketConnection = (
 	pair: string,
-	setExchangeRates: React.Dispatch<React.SetStateAction<ExchangeRates>>
+	setExchangeRates: React.Dispatch<React.SetStateAction<number>>
 ): WebSocket => {
-	const socket = new WebSocket("wss://api-pub.bitfinex.com/ws/2");
+	const socket = new WebSocket(apiLink);
 
 	socket.onopen = () => {
 		console.log("WebSocket connection opened");
@@ -23,24 +18,28 @@ export const createWebSocketConnection = (
 	};
 
 	socket.onmessage = (event: MessageEvent) => {
-		const data = JSON.parse(event.data);
-		if (Array.isArray(data)) {
-			const [, updateData] = data;
-			if (updateData && updateData.length === 10) {
-				const newExchangeRates = {
-					...setExchangeRates,
-					[pair]: {
-						symbol: pair,
-						price: updateData[6],
-					},
-				};
-				setExchangeRates(newExchangeRates);
+		try {
+			const data = JSON.parse(event.data);
+			if (Array.isArray(data)) {
+				const [, updateData] = data;
+				if (updateData && updateData.length === 10) {
+					setExchangeRates(updateData[6]);
+				}
 			}
+		} catch (error) {
+			console.error(`Error parsing WebSocket message: ${error}`);
 		}
 	};
 
-	socket.onclose = () => {
-		console.log("WebSocket connection closed");
+	socket.onerror = (event: Event) => {
+		console.error(`WebSocket error: ${event}`);
+	};
+
+	socket.onclose = (event: CloseEvent) => {
+		console.log(`WebSocket connection closed with code: ${event.code}`);
+		console.error(
+			`WebSocket connection closed with reason: ${event.reason}`
+		);
 	};
 
 	return socket;

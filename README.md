@@ -17,3 +17,12 @@ yarn dev
 ```
 
 The app will be available at http://localhost:3000.
+
+To run the app in **production** mode:
+
+```
+yarn build
+yarn start
+```
+
+The app will be available at http://localhost:3000.

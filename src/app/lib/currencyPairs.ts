@@ -1,4 +1,4 @@
-export async function getCurrencyPairs() {
+export const getCurrencyPairs = async () => {
 	try {
 		const apiUrl =
 			"https://api-pub.bitfinex.com/v2/conf/pub:list:pair:exchange";
@@ -11,4 +11,4 @@ export async function getCurrencyPairs() {
 	} catch (error) {
 		throw new Error("Failed to fetch currency pairs");
 	}
-}
+};
