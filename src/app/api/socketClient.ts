@@ -2,7 +2,7 @@ import { apiLink } from "../constants";
 
 export const createWebSocketConnection = (
 	pair: string,
-	setExchangeRates: React.Dispatch<React.SetStateAction<number>>
+	updateExchangeRate: (value: number) => void
 ): WebSocket => {
 	const socket = new WebSocket(apiLink);
 
@@ -23,7 +23,7 @@ export const createWebSocketConnection = (
 			if (Array.isArray(data)) {
 				const [, updateData] = data;
 				if (updateData && updateData.length === 10) {
-					setExchangeRates(updateData[6]);
+					updateExchangeRate(updateData[6]);
 				}
 			}
 		} catch (error) {
@@ -40,6 +40,13 @@ export const createWebSocketConnection = (
 		console.error(
 			`WebSocket connection closed with reason: ${event.reason}`
 		);
+
+		if (!event.wasClean) {
+			console.error(`WebSocket connection closed unexpectedly`);
+			setTimeout(() => {
+				createWebSocketConnection(pair, updateExchangeRate);
+			}, 5000);
+		}
 	};
 
 	return socket;
