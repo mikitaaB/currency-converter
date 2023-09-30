@@ -1,10 +1,10 @@
-import { apiLink } from "../constants";
+import { wsApiLink } from "../constants";
 
 export const createWebSocketConnection = (
 	pair: string,
 	updateExchangeRate: (value: number) => void
 ): WebSocket => {
-	const socket = new WebSocket(apiLink);
+	const socket = new WebSocket(wsApiLink);
 
 	socket.onopen = () => {
 		console.log("WebSocket connection opened");

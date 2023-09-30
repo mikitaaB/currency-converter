@@ -1,8 +1,8 @@
+import { apiPairListExchange } from "../constants";
+
 export const getCurrencyPairs = async () => {
 	try {
-		const apiUrl =
-			"https://api-pub.bitfinex.com/v2/conf/pub:list:pair:exchange";
-		const response = await fetch(apiUrl);
+		const response = await fetch(apiPairListExchange);
 		if (!response.ok) {
 			throw new Error("Failed to fetch currency pairs");
 		}

@@ -6,7 +6,7 @@ type PairSelectProps = {
 	onChange: (pair: string) => void;
 };
 
-export const PairSelect = memo(function PairSelect({
+const PairSelect = memo(function PairSelect({
 	currencyPairs,
 	selectedPair,
 	onChange,
@@ -33,3 +33,5 @@ export const PairSelect = memo(function PairSelect({
 		</label>
 	);
 });
+
+export default PairSelect;

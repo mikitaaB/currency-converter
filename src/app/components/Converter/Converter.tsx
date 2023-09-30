@@ -1,15 +1,15 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { createWebSocketConnection } from "../api/socketClient";
-import { PairSelect } from "./PairSelect";
-import { AmountInput } from "./AmountInput";
+import { createWebSocketConnection } from "../../api/socketClient";
+import PairSelect from "../PairSelect/PairSelect";
+import AmountInput from "../AmountInput";
 
 type ConverterProps = {
 	currencyPairs: string[];
 };
 
-export const Converter = ({ currencyPairs }: ConverterProps) => {
+const Converter = ({ currencyPairs }: ConverterProps) => {
 	const [amount, setAmount] = useState<number>(1);
 	const [pair, setPair] = useState<string>(currencyPairs?.[0] ?? "BTCUSD");
 	const [exchangeRate, setExchangeRate] = useState<number>(0);
@@ -60,3 +60,5 @@ export const Converter = ({ currencyPairs }: ConverterProps) => {
 		</div>
 	);
 };
+
+export default Converter;

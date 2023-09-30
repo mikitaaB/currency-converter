@@ -5,7 +5,7 @@ type AmountInputProps = {
 	onChange: (amount: number) => void;
 };
 
-export const AmountInput = memo(function AmountInput({
+const AmountInput = memo(function AmountInput({
 	amount,
 	onChange,
 }: AmountInputProps) {
@@ -38,3 +38,5 @@ export const AmountInput = memo(function AmountInput({
 		</label>
 	);
 });
+
+export default AmountInput;

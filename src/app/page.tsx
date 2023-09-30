@@ -1,4 +1,4 @@
-import { Converter } from "./components/Converter";
+import Converter from "./components/Converter";
 import { getCurrencyPairs } from "./lib/currencyPairs";
 
 export default async function Home() {
