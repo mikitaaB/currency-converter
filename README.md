@@ -1,6 +1,6 @@
 # currency-converter
 
-The application allows to convert crypto currency rates.
+The application allows to convert cryptocurrency rates. Uses Bitfinex Websocket API to fetch actual rates.
 
 ### How to setup
 
